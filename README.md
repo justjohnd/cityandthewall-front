@@ -1,3 +1,29 @@
+Basic configuration from here: https://www.makeuseof.com/postgresql-connect-nextjs-application-using-prisma/
+
+- Install next app `npx create-next-app <app-name>`
+- Install prisma client
+- Create schema.prisma exactly as it is on the backend
+- Attempt to push to db: `npx prisma db push`
+- Generate prisma client: `npx prisma db push`
+- Create lib/prisma.ts
+- Move page.tsx from /app to /pages and rename index.tsx
+- Move layout.tsx into components, favicon.ico into root, and globals.css to /styles. Then delete /app
+- **Removed** createdAt, updatedAt properties from prisma.schema due to error (need to fix)
+- Add getStaticProps to index.tsx and console.log for test to get all items
+- Stop server, run `npx prisma generate` then start server again
+
+
+## File structure and notes
+### lib/prisma.ts
+- This file instantiates a client object for the Prisma ORM and connects the front end to the back end.  
+- Setting prisma to global.prisma is only done for development, or order to prevent to many sessions from being opened at the same time
+- `global` is the Node.js global object. 
+- globalWithPrisma is set equal to global, but given the types of both globalThis and prisma
+Refs: 
+https://www.prisma.io/docs/guides/other/troubleshooting-orm/help-articles/nextjs-prisma-client-dev-practices#solution
+globalThis: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
