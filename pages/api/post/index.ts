@@ -1,35 +1,11 @@
+import { NextApiRequest, NextApiResponse } from 'next';
+import { getSession } from 'next-auth/react';
 import prisma from '../../../lib/prisma';
 
-type CreatePostRequest = {
-  title: string;
-  body: string;
-  description: string;
-};
+export default async function handle(req: NextApiRequest, res: NextApiResponse) {
+  const { title, body, description } = req.body;
 
-interface Category {
-  id: string;
-  name: string;
-}
-
-type CreatePostResponse = {
-  id: number;
-  title: string;
-  description: string;
-  body: string;
-  author: {
-    name: string;
-    email: string;
-  } | null;
-  published: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-  categories: Category[];
-};
-
-
-export default async function handle(req: CreatePostRequest, res: CreatePostResponse) {
-  const { title, body, description, session } = req.body;
-
+  const session = await getSession({ req });
   const result = await prisma.post.create({
     data: {
       title: title,
