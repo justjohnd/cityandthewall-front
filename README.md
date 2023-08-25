@@ -26,6 +26,10 @@ globalThis: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Gl
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+###
+prisma/schema.prisma
+To update the file, make your changes, then stop to front and backend browsers. Run `npx prisma generate`, then start both servers again.
+
 ## Getting Started
 
 First, run the development server:
