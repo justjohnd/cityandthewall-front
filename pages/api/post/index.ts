@@ -1,39 +1,26 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { getSession } from 'next-auth/react';
 import prisma from '../../../lib/prisma';
-
-type CreatePostData = {
-  title: string;
-  description: string;
-  body: string;
-  author?: {
-    connect: {
-      email: string;
-    };
-  } | null;
-};
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
-  const { title, body, description } = req.body;
+  const { title, description, body, published, session } = req.body;
 
-  const session = await getSession({ req });
+  const user = await prisma.user.findUnique({
+    where: { email: session?.user?.email }
+  });
 
-  const postData: CreatePostData = {
-    title: title,
-    description: description,
-    body: body,
-  };
-
-  if (session?.user) {
-    postData.author = { connect: { email: session.user.email as string } };
-  } else {
-    postData.author = null;
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
   }
 
   const result = await prisma.post.create({
-    data: postData,
+    data: {
+      title: title,
+      description: description,
+      body: body,
+      authorId: user.id,
+      published: published,
+    },
   });
-
   res.json(result);
 }

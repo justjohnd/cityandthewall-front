@@ -5,11 +5,16 @@ import { signOut, useSession } from 'next-auth/react';
 
 const Header: React.FC = () => {
   const router = useRouter();
+  // (pathname: string) => boolean is all Typescript
+  // isActive function is passed a pathname and check if it matches router.pathname. Returns a boolean
+  // routher.pathname value is the current URL
   const isActive: (pathname: string) => boolean = (pathname) =>
     router.pathname === pathname;
 
+  // useSession() is part of next-auth
   const { data: session, status } = useSession();
 
+  // data-active is just being used for styling below
   let left = (
     <div className="left">
       <Link href="/" className="bold" data-active={isActive('/')}>
@@ -114,7 +119,7 @@ const Header: React.FC = () => {
         <Link href="/" className="bold" data-active={isActive('/')}>
           Feed
         </Link>
-        <Link href="/drafts" data-active={isActive('/drafts')}>My drafts
+        <Link href="/dashboard" data-active={isActive('/dashboard')}>Dashboard
         </Link>
         <style jsx>{`
           .bold {

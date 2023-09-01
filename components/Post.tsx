@@ -1,6 +1,5 @@
 import React from "react";
 import Router from "next/router";
-import ReactMarkdown from "react-markdown";
 
 interface Category {
   id: string;
@@ -8,6 +7,8 @@ interface Category {
 }
 
 export type PostProps = {
+  authorId: number;
+  userEmail?: string | null;
   id: number;
   title: string;
   description: string;
@@ -17,16 +18,16 @@ export type PostProps = {
     email: string;
   } | null;
   published: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Date | string;
+  updatedAt: Date | string;
   categories: Category[];
 };
 
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   return (
     <div
-      onClick={() => Router.push("/p/[id]", `/p/${post.id}`)}
-      className="max-w-sm rounded overflow-hidden shadow-lg" key={post.id}>
+      onClick={() => Router.push(`/p/${post.id}`)}
+      className="max-w-sm rounded overflow-hidden shadow-lg border-solid border-indigo-600 border-2 hover:cursor-pointer" key={post.id}>
       <div className="px-6 py-4">
         <div className="font-bold text-xl mb-2">{post.title}</div>
         <p className="text-gray-700 text-base">

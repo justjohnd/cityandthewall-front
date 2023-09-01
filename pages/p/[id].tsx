@@ -4,17 +4,21 @@ import Router from 'next/router';
 import Layout from '../../components/Layout';
 import { PostProps } from '../../components/Post';
 import { useSession } from 'next-auth/react';
-import prisma from '../../lib/prisma';
+import getPostById from '@/services/api/getPostById';
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const post = await prisma.post.findUnique({
-    where: {
-      id: Number(params?.id),
-    },
-  });
-  return {
-    props: post,
-  };
+  const postId = params?.id as string | number;
+  const post = await getPostById(postId);
+
+  if (post) {
+    return {
+      props: post,
+    };
+  } else {
+    return {
+      props: {},
+    };
+  }
 };
 
 async function publishPost(id: number): Promise<void> {
@@ -32,12 +36,18 @@ async function deletePost(id: number): Promise<void> {
 }
 
 const Post: React.FC<PostProps> = (props) => {
+
   const { data: session, status } = useSession();
-  if (status === 'loading') {
-    return <div>Authenticating ...</div>;
+
+  if (status === "loading") {
+    return <p>Loading...</p>
   }
-  const userHasValidSession = Boolean(session);
-  const postBelongsToUser = session?.user?.email === props.author?.email;
+
+  if (status === "unauthenticated") {
+    setTimeout(() => Router.push('/'), 3000);
+    return <p>Please log in first.</p>;
+  }
+
   let title = props.title;
   if (!props.published) {
     title = `${title} (Draft)`;
@@ -48,11 +58,11 @@ const Post: React.FC<PostProps> = (props) => {
       <div>
         <h2>{title}</h2>
         <p>{props.body}</p>
-        {!props.published && userHasValidSession && postBelongsToUser && (
+        {!props.published && (
           <button onClick={() => publishPost(props.id)}>Publish</button>
         )}
         {
-          userHasValidSession && postBelongsToUser && (
+          (
             <button onClick={() => deletePost(props.id)}>Delete</button>
           )
         }

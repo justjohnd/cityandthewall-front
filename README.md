@@ -1,4 +1,6 @@
-Basic configuration from here: https://www.makeuseof.com/postgresql-connect-nextjs-application-using-prisma/
+Basic configuration from here: 
+https://vercel.com/guides/nextjs-prisma-postgres
+https://www.makeuseof.com/postgresql-connect-nextjs-application-using-prisma/
 
 - Install next app `npx create-next-app <app-name>`
 - Install prisma client
@@ -11,6 +13,18 @@ Basic configuration from here: https://www.makeuseof.com/postgresql-connect-next
 - **Removed** createdAt, updatedAt properties from prisma.schema due to error (need to fix)
 - Add getStaticProps to index.tsx and console.log for test to get all items
 - Stop server, run `npx prisma generate` then start server again
+
+## Glossary
+ReactNode: https://dev.to/elhamnajeebullah/react-typescript-what-is-reactnode-and-when-to-use-it-3660#:~:text=In%20ReactJS%20with%20TypeScript%2C%20ReactNode,hold%20any%20of%20these%20types
+jsx: https://nextjs.org/blog/styling-next-with-styled-jsx
+React.FC<...>: https://dev.to/elhamnajeebullah/react-typescript-what-is-reactfc-and-why-should-i-use-it-4029
+Image sizing: https://nextjs.org/docs/app/building-your-application/optimizing/images#image-sizing
+next-auth, SessionProvider: https://next-auth.js.org/getting-started/example
+useSession(): https://next-auth.js.org/getting-started/client#usesession
+_app.tsx: https://nextjs.org/docs/pages/building-your-application/routing/custom-app
+Routing: https://nextjs.org/docs/pages/building-your-application/routing
+useRouter: https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes
+data- attribute: https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes
 
 
 ## File structure and notes

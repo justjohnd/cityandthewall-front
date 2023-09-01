@@ -6,6 +6,8 @@ type Props = {
   children: ReactNode;
 };
 
+// The children are all nodes which Layout will wrap
+// ReactNode will allow all React types, except undefined and null
 const Layout: React.FC<Props> = (props) => (
   <div>
     <Header />
