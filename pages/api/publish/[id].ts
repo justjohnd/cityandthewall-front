@@ -1,11 +1,15 @@
-import prisma from '../../../lib/prisma';
+import handle from '@/services/routing/apiHandler';
+import { NextApiRequest, NextApiResponse } from 'next';
+import Router from 'next/router';
+
 
 // PUT /api/publish/:id
-export default async function handle(req, res) {
-  const postId = req.query.id;
-  const post = await prisma.post.update({
-    where: { id: postId },
-    data: { published: true },
-  });
-  res.json(post);
+export default async function publishPost(req: NextApiRequest, res: NextApiResponse) {
+
+  const action = 'publish';
+
+  await handle(req, res, action);
+
+  await Router.push('/');
+
 }
