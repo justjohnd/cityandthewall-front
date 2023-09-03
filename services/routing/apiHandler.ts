@@ -25,7 +25,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse, 
           title: title,
           description: description,
           body: body,
-          authorId: user.id,
+          authorId: session.user.id,
           published: published,
         },
       });
